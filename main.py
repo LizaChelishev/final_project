@@ -19,3 +19,7 @@ repo.reset_auto_inc(Countries)
 repo.reset_auto_inc(Customers)
 repo.reset_auto_inc(Users)
 repo.reset_auto_inc(User_Roles)
+
+user_roles_list = [User_Roles(role_name='Customer'), User_Roles(role_name='Airline Company'),
+                   User_Roles(role_name='Administrator')]
+repo.add_all(user_roles_list)

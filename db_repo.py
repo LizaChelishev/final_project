@@ -19,3 +19,7 @@ class DbRepo:
 
     def get_all_order_by(self, table_class, column_name, direction=asc):
         return self.local_session.query(table_class).order_by(direction(column_name)).all()
+
+    def add_all(self, rows_list):
+        self.local_session.add_all(rows_list)
+        self.local_session.commit()
