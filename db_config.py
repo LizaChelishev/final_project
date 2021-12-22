@@ -5,6 +5,13 @@ connection_string = 'postgresql+psyopg2://postgres:liza1709liza@localhost/flight
 
 Base = declarative_base()
 
-Engine = create_engine(connection_string, echo=True)
 
-def create_all_entities():
+def create_all_entities(engine):
+    Session = sessionmaker()
+    engine = create_engine(connection_string, echo=True)
+    local_session = Session(bind=engine)
+    Base.metadata.create_all(engine)
+    return local_session
+
+
+
