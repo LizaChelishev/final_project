@@ -1,5 +1,5 @@
 from db_config import Base
-from sqlalchemy import Column, BigInteger, Integer, String, ForeignKey, BLOB
+from sqlalchemy import Column, BigInteger, Integer, String, ForeignKey, LargeBinary
 
 
 class Users(Base):
@@ -9,4 +9,4 @@ class Users(Base):
     password = Column(String())
     email = Column(String(), unique=True)
     user_role = Column(Integer(), ForeignKey('user_roles.id'))
-    thumbnail = Column(BLOB(), nullable=True)
+    thumbnail = Column(LargeBinary(), nullable=True)
