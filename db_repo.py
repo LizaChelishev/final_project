@@ -1,4 +1,10 @@
+import datetime
+
 from sqlalchemy import asc
+
+from Flights import Flights
+from Tickets import Tickets
+from Users import Users
 
 
 class DbRepo:
@@ -23,3 +29,29 @@ class DbRepo:
     def add_all(self, rows_list):
         self.local_session.add_all(rows_list)
         self.local_session.commit()
+
+    def get_airline_by_username(self, username):
+        return self.local_session.execute(
+            f'SELECT NAME FROM AIRLINE_COMPANIES, USERS WHERE USERNAME=={username}'
+            f' AND AIRLINE_COMPANIES.USER_ID=USERS.ID')
+
+    def get_customer_by_username(self, username):
+        return self.local_session.execute(
+            f'SELECT NAME FROM CUSTOMERS, USERS WHERE USERNAME=={username} AND CUSTOMER.USER_ID=USERS.ID')
+
+    def get_user_by_username(self, username):
+        return self.local_session.query(Users).get(username)
+
+    def get_flights_by_parameters(self, origin_country_id, destination_country_id, departure_time, landing_time):
+        return self.local_session.query(Flights).get(origin_country_id, destination_country_id,
+                                                     departure_time, landing_time)
+
+    def get_flights_by_airline_id(self, airline_id):
+        return self.local_session.query(Flights).get(airline_id)
+
+    def get_arrival_flights(self, landing_time):
+        return self.local_session.query(Flights).filter(landing_time in range(datetime.datetime.now(),
+                                                                              datetime.timedelta(hours=12))).all()
+
+    def get_tickets_by_customer(self, customer_id):
+        return self.local_session.query(Tickets).filter(customer_id).all()

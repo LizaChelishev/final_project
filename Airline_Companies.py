@@ -8,3 +8,5 @@ class Airline_companies(Base):
     name = Column(String(), unique=True)
     country_id = Column(Integer(), ForeignKey('countries.id'))
     user_id = Column(BigInteger(), ForeignKey('users.id'), unique=True)
+
+
