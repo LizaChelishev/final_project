@@ -1,3 +1,4 @@
+from sqlalchemy.orm import relationship, backref
 from db_config import Base
 from sqlalchemy import Column, BigInteger, Integer, DateTime, ForeignKey
 
@@ -11,3 +12,12 @@ class Flights(Base):
     departure_time = Column(DateTime())
     landing_time = Column(DateTime())
     remaining_tickets = Column(Integer())
+
+    tickets = relationship("Tickets", backref=backref("flights", uselist=True))
+
+
+    def __str__(self):
+        return f'<Lessons> id:{self.id} student_id:{self.student_id} teacher_id:{self.teacher_id} subject_id:{self.subject_id}\n'
+
+    def __repr__(self):
+        return f'<Lessons> id:{self.id} student_id:{self.student_id} teacher_id:{self.teacher_id} subject_id:{self.subject_id}\n'
