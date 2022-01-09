@@ -1,13 +1,13 @@
 from db_config import create_all_entities
 from db_repo import DbRepo
-from Airline_Companies import Airline_Companies
-from Flights import Flights
-from Tickets import Tickets
-from Countries import Countries
-from Customers import Customers
-from Users import Users
-from User_Roles import User_Roles
-from Administrators import Administrators
+from Database.Airline_Companies import Airline_Companies
+from Database.Flights import Flights
+from Database.Tickets import Tickets
+from Database.Countries import Countries
+from Database.Customers import Customers
+from Database.Users import Users
+from Database.User_Roles import User_Roles
+from Database.Administrators import Administrators
 
 
 class FacadeBase:
