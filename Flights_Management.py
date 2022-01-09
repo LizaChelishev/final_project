@@ -27,4 +27,3 @@ class Flights_Management:
         user_roles_list = [User_Roles(role_name='Customer'), User_Roles(role_name='Airline_Company'),
                            User_Roles(role_name='Administrator')]
         repo.add_all(user_roles_list)
-
