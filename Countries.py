@@ -9,6 +9,4 @@ class Countries(Base):
     name = Column(String(), unique=True)
     flag = Column(LargeBinary())
 
-    incoming_flights = relationship("Flights", backref=backref("countries", uselist=True))
-    outgoing_flights = relationship("Flights", backref=backref("countries", uselist=True))
     airline_companies = relationship("Airline_Companies", backref=backref("countries", uselist=True))

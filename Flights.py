@@ -14,6 +14,8 @@ class Flights(Base):
     remaining_tickets = Column(Integer())
 
     tickets = relationship("Tickets", backref=backref("flights", uselist=True))
+    destination_countries = relationship("Countries", foreign_keys=[destination_country_id])
+    origin_countries = relationship("Countries", foreign_keys=[origin_country_id])
 
 
     def __str__(self):
