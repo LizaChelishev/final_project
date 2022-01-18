@@ -26,6 +26,24 @@ class FlightDto:
     def set_origin_country_id(self, origin_country_id):
         self.origin_country_id = origin_country_id
 
+    def get_destination_country_id(self):
+        return self.destination_country_id
+
+    def set_destination_country_id(self, destination_country_id):
+        self.destination_country_id = destination_country_id
+
+    def get_departure_time(self):
+        return self.departure_time
+
+    def set_departure_time(self, departure_time):
+        self.departure_time = departure_time
+
+    def get_landing_time(self):
+        return self.landing_time
+
+    def set_landing_time(self, landing_time):
+        self.landing_time = landing_time
+
     def get_remaining_tickets(self):
         return self.remaining_tickets
 

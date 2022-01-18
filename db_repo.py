@@ -20,6 +20,9 @@ class DbRepo:
     def get_all(self, table_class):
         return self.local_session.query(table_class).all()
 
+    def get_all_by_filter(self, table_class, filter_column, filter_value):
+        return self.local_session.query(table_class).filter(filter_column == filter_value)
+
     def get_all_limit(self, table_class, limit_num):
         return self.local_session.query(table_class).limit(limit_num).all()
 
@@ -34,8 +37,8 @@ class DbRepo:
         self.local_session.add(table_class, object)
         self.local_session.commit()
 
-    def update(self, table_class, id, object):
-        self.local_session.update(table_class, id, object)
+    def update(self, table_class, id_column_name,  id, data_dict):
+        self.local_session.query(table_class).filter(id_column_name == id).update(data_dict)
         self.local_session.commit()
 
     def remove(self, table_class, id):
