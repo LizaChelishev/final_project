@@ -21,3 +21,12 @@ class AirlineFacade(FacadeBase):
             raise InvalidFlightException(flight.get_airline_company_id(), flight.get_id())
         flight_dbo = Flights()
         FacadeBase.repo.update(self, table_class, id, object)
+
+        if flight.landing_time() > flight.departure_time():
+            print_to_log(logger, logging.ERROR, 'Invalid departure or landing time, '
+                                                'make sure landing time is after departure time.')
+            raise InvalidFlightException(flight.get_airline_company_id(), flight.get_id())
+
+        if flight.origin_country_id() == flight.destination_country_id():
+            print_to_log(logger, logging.ERROR, 'Destination country can not be the same as origin country.')
+            raise InvalidFlightException(flight.get_airline_company_id(), flight.get_id())

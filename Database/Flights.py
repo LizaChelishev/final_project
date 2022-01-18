@@ -19,7 +19,9 @@ class Flights(Base):
 
 
     def __str__(self):
-        return f'<Lessons> id:{self.id} student_id:{self.student_id} teacher_id:{self.teacher_id} subject_id:{self.subject_id}\n'
+        return f'<Flight> id:{self.id} airline_company_id:{self.airline_company_id}' \
+               f' origin_country_id:{self.origin_country_id} destination_country_id:{self.destination_country_id}\n'
 
     def __repr__(self):
-        return f'<Lessons> id:{self.id} student_id:{self.student_id} teacher_id:{self.teacher_id} subject_id:{self.subject_id}\n'
+        return f'<Flight> id:{self.id} airline_company_id:{self.airline_company_id}' \
+               f' origin_country_id:{self.origin_country_id} destination_country_id:{self.destination_country_id}\n'
