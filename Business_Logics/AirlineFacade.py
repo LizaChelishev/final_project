@@ -12,7 +12,10 @@ class AirlineFacade(FacadeBase):
 
     def get_flights_by_airline(self, airline_company_id):
         flight_dto_list = []
-        flights = FacadeBase.repo.get_all_by_filter(Flights, Flights.airline_company_id, airline_company_id)
+        flights = FacadeBase.repo.get_all_by_condition(Flights, Flights.airline_company_id, airline_company_id)
+        for flight in flights:
+            flight_dto = flight.get_dto()
+            flight_dto_list.append(flight_dto)
         return flight_dto_list
 
     def update_airline(self, airline):

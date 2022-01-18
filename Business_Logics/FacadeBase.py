@@ -20,14 +20,14 @@ class FacadeBase:
             local_session = create_all_entities()
             FacadeBase.repo = DbRepo(local_session)
 
-            FacadeBase.repo.reset_auto_inc(Airline_Companies)
-            FacadeBase.repo.reset_auto_inc(Flights)
-            FacadeBase.repo.reset_auto_inc(Tickets)
-            FacadeBase.repo.reset_auto_inc(Countries)
-            FacadeBase.repo.reset_auto_inc(Customers)
-            FacadeBase.repo.reset_auto_inc(Users)
+            #FacadeBase.repo.reset_auto_inc(Airline_Companies)
+            #FacadeBase.repo.reset_auto_inc(Flights)
+            #FacadeBase.repo.reset_auto_inc(Tickets)
+            #FacadeBase.repo.reset_auto_inc(Countries)
+            #FacadeBase.repo.reset_auto_inc(Customers)
+            #FacadeBase.repo.reset_auto_inc(Users)
             FacadeBase.repo.reset_auto_inc(User_Roles)
-            FacadeBase.repo.reset_auto_inc(Administrators)
+            #FacadeBase.repo.reset_auto_inc(Administrators)
 
             user_roles_list = [User_Roles(role_name='Customer'), User_Roles(role_name='Airline_Company'),
                                User_Roles(role_name='Administrator')]

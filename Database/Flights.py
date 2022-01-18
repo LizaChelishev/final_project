@@ -1,4 +1,6 @@
 from sqlalchemy.orm import relationship, backref
+
+from DTO.FlightDto import FlightDto
 from db_config import Base
 from sqlalchemy import Column, BigInteger, Integer, DateTime, ForeignKey
 
@@ -37,3 +39,14 @@ class Flights(Base):
 
     def get_key(self):
         return self.id
+
+    def get_dto(self):
+        flight_dto = FlightDto()
+        flight_dto.set_id(self.id)
+        flight_dto.set_airline_company_id(self.airline_company_id)
+        flight_dto.set_origin_country_id(self.origin_country_id)
+        flight_dto.set_destination_country_id(self.destination_country_id)
+        flight_dto.set_departure_time(self.departure_time)
+        flight_dto.set_landing_time(self.landing_time)
+        flight_dto.set_remaining_tickets(self.remaining_tickets)
+        return flight_dto

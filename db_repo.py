@@ -20,7 +20,7 @@ class DbRepo:
     def get_all(self, table_class):
         return self.local_session.query(table_class).all()
 
-    def get_all_by_filter(self, table_class, filter_column, filter_value):
+    def get_all_by_condition(self, table_class, filter_column, filter_value):
         return self.local_session.query(table_class).filter(filter_column == filter_value)
 
     def get_all_limit(self, table_class, limit_num):
