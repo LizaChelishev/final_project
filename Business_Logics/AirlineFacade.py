@@ -11,6 +11,7 @@ logger = logging.getLogger(__name__)
 class AirlineFacade(FacadeBase):
 
     def get_flights_by_airline(self, airline_company_id):
+        print_to_log(logger, logging.INFO, 'Invalid number of remaining tickets, cannot be negative.')
         flight_dto_list = []
         flights = FacadeBase.repo.get_all_by_condition(Flights, Flights.airline_company_id, airline_company_id)
         for flight in flights:
@@ -19,9 +20,10 @@ class AirlineFacade(FacadeBase):
         return flight_dto_list
 
     def update_airline(self, airline):
-        pass
+        print_to_log(logger, logging.INFO, 'Invalid number of remaining tickets, cannot be negative.')
 
     def update_flight(self, flight):
+        print_to_log(logger, logging.INFO, 'Invalid number of remaining tickets, cannot be negative.')
         if flight.get_remaining_tickets() < 0:
             print_to_log(logger, logging.ERROR, 'Invalid number of remaining tickets, cannot be negative.')
             raise InvalidFlightException(flight.get_airline_company_id(), flight.get_id())

@@ -8,6 +8,10 @@ from Database.Customers import Customers
 from Database.Users import Users
 from Database.User_Roles import User_Roles
 from Database.Administrators import Administrators
+import logging
+from ApplicationLogger import print_to_log
+
+logger = logging.getLogger(__name__)
 
 
 
@@ -58,28 +62,28 @@ class FacadeBase:
         FacadeBase.repo.add_all(flights_list)
 
     def get_all_flights(self):
-        pass
+        print_to_log(logger, logging.INFO, 'Invalid number of remaining tickets, cannot be negative.')
 
     def get_flight_by_id(self, id):
-        pass
+        print_to_log(logger, logging.INFO, 'Invalid number of remaining tickets, cannot be negative.')
 
     def get_flights_by_parameters(self, origin_country_id, destination_country_id, date):
-        pass
+        print_to_log(logger, logging.INFO, 'Invalid number of remaining tickets, cannot be negative.')
 
     def get_all_airlines(self):
-        pass
+        print_to_log(logger, logging.INFO, 'Invalid number of remaining tickets, cannot be negative.')
 
     def get_airline_by_id(self, id):
-        pass
+        print_to_log(logger, logging.INFO, 'Invalid number of remaining tickets, cannot be negative.')
 
     def add_customer(self, customer):
-        pass
+        print_to_log(logger, logging.INFO, 'Invalid number of remaining tickets, cannot be negative.')
 
     def add_airline(self, airline):
-        pass
+        print_to_log(logger, logging.INFO, 'Invalid number of remaining tickets, cannot be negative.')
 
     def get_all_countries(self):
-        pass
+        print_to_log(logger, logging.INFO, 'Invalid number of remaining tickets, cannot be negative.')
 
     def get_country_by_id(self, id):
-        pass
+        print_to_log(logger, logging.INFO, 'Invalid number of remaining tickets, cannot be negative.')

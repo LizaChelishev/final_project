@@ -26,9 +26,9 @@ anonymous_facade = AnonymousFacade()
 print_to_log(logger, logging.DEBUG, "Creating airline facade...")
 airline_facade = AirlineFacade()
 
-flight_dto_list = airline_facade.get_flights_by_airline(1)
-flight_dto_list[0].origin_country_id = 3
-airline_facade.update_flight(flight_dto_list[0])
+flight_list = airline_facade.get_flights_by_airline(1)
+flight_list[0].origin_country_id = 3
+airline_facade.update_flight(flight_list[0])
 
 
 sys.exit(0)
