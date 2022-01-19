@@ -64,8 +64,11 @@ class FacadeBase:
     def get_all_flights(self):
         print_to_log(logger, logging.INFO, 'Invalid number of remaining tickets, cannot be negative.')
 
-    def get_flight_by_id(self, id):
-        print_to_log(logger, logging.INFO, 'Invalid number of remaining tickets, cannot be negative.')
+    def get_flight_by_id(self, flight_id):
+        print_to_log(logger, logging.INFO, f'Getting flight id {flight_id}...')
+        flight_dbo = FacadeBase.repo.get_by_id(Flights, flight_id)
+        flight_dto = flight_dbo.get_dto()
+        return flight_dto
 
     def get_flights_by_parameters(self, origin_country_id, destination_country_id, date):
         print_to_log(logger, logging.INFO, 'Invalid number of remaining tickets, cannot be negative.')
