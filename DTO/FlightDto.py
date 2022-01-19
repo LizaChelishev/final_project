@@ -52,8 +52,12 @@ class FlightDto:
 
     def __str__(self):
         return f'<Flight> id:{self.id} airline_company_id:{self.airline_company_id}' \
-               f' origin_country_id:{self.origin_country_id} destination_country_id:{self.destination_country_id}\n'
+               f' origin_country_id:{self.origin_country_id} destination_country_id:{self.destination_country_id}' \
+               f'departure_time:{self.departure_time}, landing_time{self.landing_time},' \
+               f' remaining_tickets{self.remaining_tickets}\n'
 
     def __repr__(self):
         return f'<Flight> id:{self.id} airline_company_id:{self.airline_company_id}' \
-               f' origin_country_id:{self.origin_country_id} destination_country_id:{self.destination_country_id}\n'
+               f' origin_country_id:{self.origin_country_id} destination_country_id:{self.destination_country_id}' \
+               f'departure_time:{self.departure_time}, landing_time{self.landing_time},' \
+               f' remaining_tickets{self.remaining_tickets}\n'

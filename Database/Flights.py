@@ -29,16 +29,17 @@ class Flights(Base):
 
     def get_dict(self, airline_company_id, origin_country_id, destination_country_id, departure_time
                  , landing_time, remaining_tickets):
-        flight_dict = {self.airline_company_id: airline_company_id,
-                       self.origin_country_id: origin_country_id,
-                       self.destination_country_id: destination_country_id,
-                       self.departure_time: departure_time,
-                       self.landing_time: landing_time,
-                       self.remaining_tickets: remaining_tickets}
+        flight_dict = dict({Flights.airline_company_id: str(airline_company_id),
+                            Flights.origin_country_id: str(origin_country_id),
+                            Flights.destination_country_id: str(destination_country_id),
+                            Flights.departure_time: str(departure_time),
+                            Flights.landing_time: str(landing_time),
+                            Flights.remaining_tickets: str(remaining_tickets)})
         return flight_dict
 
-    def get_key(self):
-        return self.id
+    @staticmethod
+    def get_key():
+        return Flights.id
 
     def get_dto(self):
         flight_dto = FlightDto()
