@@ -62,7 +62,7 @@ class FacadeBase:
         FacadeBase.repo.add_all(flights_list)
 
     def get_all_flights(self):
-        print_to_log(logger, logging.INFO, 'Invalid number of remaining tickets, cannot be negative.')
+        print_to_log(logger, logging.INFO, 'Getting all flights...')
 
     def get_flight_by_id(self, flight_id):
         print_to_log(logger, logging.INFO, f'Getting flight id {flight_id}...')
@@ -71,22 +71,23 @@ class FacadeBase:
         return flight_dto
 
     def get_flights_by_parameters(self, origin_country_id, destination_country_id, date):
-        print_to_log(logger, logging.INFO, 'Invalid number of remaining tickets, cannot be negative.')
+        print_to_log(logger, logging.INFO, f'Getting flight with origin country id:{origin_country_id},'
+                                           f' destinations country id:{destination_country_id}, date: {date}.')
 
     def get_all_airlines(self):
-        print_to_log(logger, logging.INFO, 'Invalid number of remaining tickets, cannot be negative.')
+        print_to_log(logger, logging.INFO, 'Getting all airlines...')
 
     def get_airline_by_id(self, id):
-        print_to_log(logger, logging.INFO, 'Invalid number of remaining tickets, cannot be negative.')
+        print_to_log(logger, logging.INFO, f'Getting flight id {id}...')
 
     def add_customer(self, customer):
-        print_to_log(logger, logging.INFO, 'Invalid number of remaining tickets, cannot be negative.')
+        print_to_log(logger, logging.INFO, f'Adding customer {customer.id}')
 
     def add_airline(self, airline):
-        print_to_log(logger, logging.INFO, 'Invalid number of remaining tickets, cannot be negative.')
+        print_to_log(logger, logging.INFO, f'Adding airline {airline.id}')
 
     def get_all_countries(self):
-        print_to_log(logger, logging.INFO, 'Invalid number of remaining tickets, cannot be negative.')
+        print_to_log(logger, logging.INFO, 'Getting all countries...')
 
     def get_country_by_id(self, id):
-        print_to_log(logger, logging.INFO, 'Invalid number of remaining tickets, cannot be negative.')
+        print_to_log(logger, logging.INFO, f'Getting flight id {id}...')
