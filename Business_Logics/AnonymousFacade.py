@@ -9,4 +9,4 @@ class AnonymousFacade(FacadeBase):
         print_to_log(logger, logging.INFO, 'Invalid number of remaining tickets, cannot be negative.')
 
     def create_new_user(self, user):
-        print_to_log(logger, logging.INFO, 'Invalid number of remaining tickets, cannot be negative.')
+        print_to_log(logger, logging.INFO, f'Creating new user {user.id}...')
