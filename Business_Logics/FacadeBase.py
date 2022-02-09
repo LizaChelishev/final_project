@@ -10,16 +10,16 @@ from Database.User_Roles import User_Roles
 from Database.Administrators import Administrators
 import logging
 from ApplicationLogger import print_to_log
+from abc import ABC, abstractmethod
 
 logger = logging.getLogger(__name__)
 
 
-
-class FacadeBase:
+class FacadeBase(ABC):
     repo = None
 
-    @staticmethod
-    def init():
+    @abstractmethod
+    def init(self):
         print('init')
         if FacadeBase.repo is None:
             print('creating DB repo')
@@ -49,7 +49,8 @@ class FacadeBase:
                           Countries(name='United Kingdom')]
         FacadeBase.repo.add_all(countries_list)
 
-        airlines_list = [Airline_Companies(name='Air France', country_id=1), Airline_Companies(name='El Al', country_id=2),
+        airlines_list = [Airline_Companies(name='Air France', country_id=1),
+                         Airline_Companies(name='El Al', country_id=2),
                          Airline_Companies(name='British Airways', country_id=3)]
         FacadeBase.repo.add_all(airlines_list)
 
@@ -90,4 +91,4 @@ class FacadeBase:
         print_to_log(logger, logging.INFO, 'Getting all countries...')
 
     def get_country_by_id(self, id):
-        print_to_log(logger, logging.INFO, f'Getting flight id {id}...')
+        print_to_log(logger, logging.INFO, f'Getting country id {id}...')
