@@ -81,6 +81,9 @@ class FacadeBase(ABC):
     def get_airline_by_id(self, id):
         print_to_log(logger, logging.INFO, f'Getting flight id {id}...')
 
+    def get_airline_by_parameter(self, name, country_id, user_id):
+        print_to_log(logger, logging.INFO, f'Getting airline company with name {name}...')
+
     def add_customer(self, customer):
         print_to_log(logger, logging.INFO, f'Adding customer {customer.id}')
 
