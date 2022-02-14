@@ -11,3 +11,5 @@ class Airline_Companies(Base):
     user_id = Column(BigInteger(), ForeignKey('users.id'), unique=True)
 
     flights = relationship("Flights", backref=backref("airline_companies", uselist=True))
+
+
