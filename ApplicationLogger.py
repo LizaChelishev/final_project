@@ -1,6 +1,5 @@
 import datetime
 import logging
-import datetime as dt
 
 
 def init_logger():
