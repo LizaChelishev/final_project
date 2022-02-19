@@ -2,6 +2,7 @@ from Business_Logics.FacadeBase import *
 from sqlalchemy.testing.pickleable import User
 from Business_Logics.FacadeBase import FacadeBase
 from Database import Airline_Companies
+from Database.Administrators import Administrators
 from Database.Countries import Countries
 from Database.Customers import Customers
 from Database.Flights import Flights
@@ -21,16 +22,16 @@ class AdministratorFacade(FacadeBase):
     def get_all_customers(self):
         if self.login_token.role != 'administrators':
             print_to_log(logger, logging.ERROR,
-                         f'The login token "{self.login_token}" tried to use the function get_all_customers but his role is '
-                         f'not Administrator.')
+                         f'The function get_all is accessible to administrators only. The login token '
+                         f'"{self.login_token}" tried to use this function.')
             return
         return self.repo.get_all(Customers)
 
     def add_administrator(self, user, administrator):
         if self.login_token.role != 'administrators':
             print_to_log(logger, logging.ERROR,
-                         f'The login token "{self.login_token}" tried to use the function add_administrator but his role is '
-                         f'not Administrator.')
+                         f'The function add_administrator is accessible to administrators only. The login token '
+                         f'"{self.login_token}" tried to use this function.')
             return
         if not isinstance(user, Users):
             print_to_log(logger, logging.ERROR,

@@ -8,7 +8,7 @@ from Database.User_Roles import User_Roles
 import logging
 from ApplicationLogger import print_to_log
 from abc import ABC, abstractmethod
-from LoginToken import LoginToken
+from Login_Token import LoginToken
 
 logger = logging.getLogger(__name__)
 
@@ -17,7 +17,7 @@ class FacadeBase(ABC):
     repo = None
 
     @abstractmethod
-    def __init__(self, repo, login_token=LoginToken(id_=None, name='Anonymous', role='Anonymous')):
+    def __init__(self, repo, login_token=LoginToken):
         self.logger = logging.Logger.get_instance()
         self.repo = repo
         self._login_token = login_token
