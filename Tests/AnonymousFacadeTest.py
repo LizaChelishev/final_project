@@ -1,17 +1,16 @@
 import pytest
-from AnonymousFacade import AnonymousFacade
-from CustomerFacade import CustomerFacade
-from AirlineFacade import AirlineFacade
-from AdministratorFacade import AdministratorFacade
-from UserRoleTableError import UserRoleTableError
-from User import User
-from DbRepoPool import DbRepoPool
+from Business_Logics.AdministratorFacade import AdministratorFacade
+from Business_Logics.AirlineFacade import AirlineFacade
+from Business_Logics.AnonymousFacade import AnonymousFacade
+from Business_Logics.CustomerFacade import CustomerFacade
+from Exceptions.UserRoleSettingException import UserRoleSettingException
+from db_repo_pool import db_repo_pool
 
 
 @pytest.fixture(scope='session')
 def anonymous_facade_object():
     print('Setting up same DAO for all tests.')
-    repool = DbRepoPool.get_instance()
+    repool = db_repo_pool.get_instance()
     repo = repool.get_connection()
     return AnonymousFacade(repo)
 
@@ -35,5 +34,5 @@ def test_anonymous_facade_log_in(anonymous_facade_object, username, password, ex
 
 
 def test_anonymous_facade_log_in_raise_userroletableerror(anonymous_facade_object):
-    with pytest.raises(UserRoleTableError):
+    with pytest.raises(UserRoleSettingException):
         anonymous_facade_object.login('not legal', '123')
