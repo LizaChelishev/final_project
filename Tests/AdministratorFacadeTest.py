@@ -1,16 +1,17 @@
 import pytest
-from AnonymousFacade import AnonymousFacade
-from User import User
-from Administrator import Administrator
-from Customer import Customer
-from Airline_Company import Airline_Company
-from DbRepoPool import DbRepoPool
+
+from Database.Administrators import Administrators
+from Database.Airline_Companies import Airline_Companies
+from Database.Customers import Customers
+from Database.Users import Users
+from db_repo_pool import db_repo_pool
+from Business_Logics.AnonymousFacade import AnonymousFacade
 
 
 @pytest.fixture(scope='session')
 def administrator_facade_object():
     print('Setting up same DAO for all tests.')
-    repool = DbRepoPool.get_instance()
+    repool = db_repo_pool.get_instance()
     repo = repool.get_connection()
     anonfacade = AnonymousFacade(repo)
     return anonfacade.login('Tomer', '123')
@@ -23,11 +24,19 @@ def reset_db(administrator_facade_object):
 
 
 @pytest.mark.parametrize('user, administrator, expected', [('not user', 2, None),
-                                                           (User(username='Elad', password='123', email='elad@gmail.com', user_role=9), 2, None),
-                                                           (User(username='Elad', password='123', email='elad@gmail.com', user_role=3), 2, None),
-                                                           (User(username='Eladi', password='123', email='eladi@gmail.com', user_role=3), 'k', None),
-                                                           (User(username='Eladi', password='123', email='eladi@gmail.com', user_role=3),
-                                                            Administrator(first_name='Borissss', last_name='Boriiii', user_id=6), True)])
+                                                           (Users(username='Test', password='123',
+                                                                  email='lizachelishev@gmail.com', user_role=9), 2,
+                                                            None),
+                                                           (Users(username='Oren', password='123',
+                                                                  email='lizachelishev@gmail.com', user_role=3), 2,
+                                                            None),
+                                                           (Users(username='Liza', password='123',
+                                                                  email='lizachelishev@gmail.com', user_role=3), 'a',
+                                                            None),
+                                                           (Users(username='Pypo', password='123',
+                                                                  email='lizachelishev@gmail.com', user_role=3),
+                                                            Administrators(first_name='Liza', last_name='Chelishev',
+                                                                           user_id=6), True)])
 def test_administrator_facade_add_administrator(administrator_facade_object, user, administrator, expected):
     actual = administrator_facade_object.add_administrator(user, administrator)
     assert actual == expected
@@ -35,10 +44,10 @@ def test_administrator_facade_add_administrator(administrator_facade_object, use
 
 def test_administrator_facade_get_all_customers(administrator_facade_object):
     actual = administrator_facade_object.get_all_customers()
-    expected = [Customer(id=1, first_name='Elad', last_name='Gunders', address='Sokolov 11',
-                          phone_no='0545557007', credit_card_no='0000', user_id=1),
-                Customer(id=2, first_name='Uri', last_name='Goldshmid', address='Helsinki 16',
-                         phone_no='0527588331', credit_card_no='0001', user_id=2)]
+    expected = [Customers(id=1, first_name='Tibi', last_name='Oren', address='Tel Aviv',
+                          phone_no='0544462114', credit_card_no='0000', user_id=1),
+                Customers(id=2, first_name='Yael', last_name='Icon', address='Hess 9',
+                          phone_no='0544462115', credit_card_no='0001', user_id=2)]
     assert actual == expected
 
 
@@ -70,41 +79,49 @@ def test_administrator_facade_remove_airline(administrator_facade_object, airlin
     assert actual == expected
 
 
-@pytest.mark.parametrize('user, customer, expected', [(1, 1, None), (User(username='Elad', password='123', email='eladi@gmail.com', user_role=2),
-                                                       Customer(first_name='kk', last_name='lk', address='Sokolov 1',
-                                                        phone_no='0545557000', credit_card_no='0099', user_id=1) , None),
-                                                      (User(username='Elados', password='123', email='eladi@gmail.coom', user_role=2),
-                                                       Customer(first_name='kk', last_name='lk', address='Sokolov 1',
-                                                                phone_no='0545557000', credit_card_no='0099', user_id=1), None),
-                                                      (User(username='Elad', password='123', email='eladi@gmail.com', user_role=1),
-                                                       Customer(first_name='kk', last_name='lk', address='Sokolov 1',
-                                                        phone_no='0545557000', credit_card_no='0099', user_id=1) , None),
-                                                      (User(username='Elados', password='123', email='eladi@gmail.coom', user_role=2),
-                                                       'g', None),
-                                                      (User(username='Elados', password='123', email='eladii@gmail.com', user_role=1),
-                                                       Customer(first_name='kk', last_name='lk', address='Sokolov 1',
-                                                        phone_no='0545557007', credit_card_no='0099', user_id=1) , None),
-                                                      (User(username='Elados', password='123', email='eladii@gmail.com', user_role=1),
-                                                       Customer(first_name='kk', last_name='lk', address='Sokolov 1',
-                                                        phone_no='0545557004', credit_card_no='0000', user_id=1) , None),
-                                                      (User(username='Elados', password='123', email='eladii@gmail.com', user_role=1),
-                                                       Customer(first_name='kk', last_name='lk', address='Sokolov 1',
-                                                        phone_no='0545557004', credit_card_no='0055', user_id=8) , True)
-                                                      ])
+@pytest.mark.parametrize('user, customer, expected',
+                         [(1, 1, None), (Users(username='Elad', password='123', email='eladi@gmail.com', user_role=2),
+                                         Customers(first_name='kk', last_name='lk', address='Sokolov 1',
+                                                   phone_no='0545557000', credit_card_no='0099', user_id=1), None),
+                          (Users(username='Elados', password='123', email='eladi@gmail.coom', user_role=2),
+                           Customers(first_name='kk', last_name='lk', address='Sokolov 1',
+                                     phone_no='0545557000', credit_card_no='0099', user_id=1), None),
+                          (Users(username='Elad', password='123', email='eladi@gmail.com', user_role=1),
+                           Customers(first_name='kk', last_name='lk', address='Sokolov 1',
+                                     phone_no='0545557000', credit_card_no='0099', user_id=1), None),
+                          (Users(username='Elados', password='123', email='eladi@gmail.coom', user_role=2),
+                           'g', None),
+                          (Users(username='Elados', password='123', email='eladii@gmail.com', user_role=1),
+                           Customers(first_name='kk', last_name='lk', address='Sokolov 1',
+                                     phone_no='0545557007', credit_card_no='0099', user_id=1), None),
+                          (Users(username='Elados', password='123', email='eladii@gmail.com', user_role=1),
+                           Customers(first_name='kk', last_name='lk', address='Sokolov 1',
+                                     phone_no='0545557004', credit_card_no='0000', user_id=1), None),
+                          (Users(username='Elados', password='123', email='eladii@gmail.com', user_role=1),
+                           Customers(first_name='kk', last_name='lk', address='Sokolov 1',
+                                     phone_no='0545557004', credit_card_no='0055', user_id=8), True)
+                          ])
 def test_administrator_facade_add_customer(administrator_facade_object, user, customer, expected):
     actual = administrator_facade_object.add_customer(user, customer)
     assert actual == expected
 
 
 @pytest.mark.parametrize('user, airline, expected', [(1, 1, None),
-                                                     (User(username='Elad', password='123', email='eladi@gmail.com', user_role=1), 1, None),
-                                                     (User(username='Eladi', password='123', email='eladi@gmail.com', user_role=2), 1, None),
-                                                     (User(username='Eladi', password='123', email='eladi@gmail.com', user_role=2),
-                                                      Airline_Company(name='Yoni', country_id=1, user_id=3), None),
-                                                     (User(username='Eladi', password='123', email='eladi@gmail.com', user_role=2),
-                                                      Airline_Company(name='Yonchkin', country_id=3, user_id=3), None),
-                                                     (User(username='Eladi', password='123', email='eladi@gmail.com', user_role=2),
-                                                      Airline_Company(name='Yonchkin', country_id=1, user_id=8), True)])
+                                                     (Users(username='Elad', password='123', email='eladi@gmail.com',
+                                                            user_role=1), 1, None),
+                                                     (Users(username='Eladi', password='123', email='eladi@gmail.com',
+                                                            user_role=2), 1, None),
+                                                     (Users(username='Eladi', password='123', email='eladi@gmail.com',
+                                                            user_role=2),
+                                                      Airline_Companies(name='Yoni', country_id=1, user_id=3), None),
+                                                     (Users(username='Eladi', password='123', email='eladi@gmail.com',
+                                                            user_role=2),
+                                                      Airline_Companies(name='Yonchkin', country_id=3, user_id=3),
+                                                      None),
+                                                     (Users(username='Eladi', password='123', email='eladi@gmail.com',
+                                                            user_role=2),
+                                                      Airline_Companies(name='Yonchkin', country_id=1, user_id=8),
+                                                      True)])
 def test_administrator_facade_add_airline(administrator_facade_object, user, airline, expected):
     actual = administrator_facade_object.add_airline(user, airline)
     assert actual == expected

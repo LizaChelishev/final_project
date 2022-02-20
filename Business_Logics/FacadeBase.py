@@ -89,7 +89,7 @@ class FacadeBase(ABC):
                          f'that was sent is not positive.')
             return
         return self.repo.get_by_condition(Airline_Companies,
-                                          lambda query: query.filter(Airline_Companies.id == id_).all())
+                                          lambda query: query.filter(Airline_Companies.id == id).all())
 
     def get_airline_by_parameter(self, name, country_id, user_id):
         print_to_log(logger, logging.INFO, f'Getting airline company with name {name}...')
@@ -105,7 +105,7 @@ class FacadeBase(ABC):
                 f'The login token "{self.login_token}" used the function get_country_by_id but the id "{id}" that was '
                 f'sent is not an integer.')
             return
-        if id_ <= 0:
+        if id <= 0:
             self.logger.logger.error(
                 f'The login token "{self.login_token}" used the function get_country_by_id but the id "{id}" that was '
                 f'sent is not positive.')

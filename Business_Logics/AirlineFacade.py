@@ -6,6 +6,7 @@ from Exceptions.InvalidFlightException import InvalidFlightException
 import logging
 from ApplicationLogger import print_to_log
 from Database.Flights import *
+from Exceptions.FlightTimesException import FlightTimesException
 
 logger = logging.getLogger(__name__)
 
@@ -94,7 +95,7 @@ class AirlineFacade(FacadeBase):
                          f'The login token "{self.login_token}" tried to use the function add_flight but '
                          f'the time delta between departure_time "{flight.departure_time}" and landing time "{flight.landing_time}" '
                          f'is less than one hour.')
-            raise NotLegalFlightTimesError
+            raise FlightTimesException
         if not isinstance(flight.remaining_tickets, int):
             print_to_log(logger, logging.ERROR,
                          f'The login token "{self.login_token}" tried to use the function add_flight but the remaining_tickets'

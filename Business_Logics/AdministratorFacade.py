@@ -1,6 +1,6 @@
 from Business_Logics.FacadeBase import *
 from Business_Logics.FacadeBase import FacadeBase
-from Database import Airline_Companies
+from Database import Airline_Companies, Tickets
 from Database.Administrators import Administrators
 from Database.Countries import Countries
 from Database.Customers import Customers
@@ -114,7 +114,7 @@ class AdministratorFacade(FacadeBase):
             return
         print_to_log(logger, logging.DEBUG,
                      f'The login token "{self.login_token}" used the function remove_airline and removed the airline "{airline}"')
-        self.repo.delete_by_id(User, Users.id, airline[0].user.id)
+        self.repo.delete_by_id(Users, Users.id, airline[0].user.id)
         return True
 
     def remove_customer(self, customer_id):
@@ -148,7 +148,7 @@ class AdministratorFacade(FacadeBase):
                                    {Flights.remaining_tickets: ticket.flight.remaining_tickets + 1})
         print_to_log(logger, logging.DEBUG,
                      f'The login token "{self.login_token}" used the function remove_customer and removed the customer "{customer}"')
-        self.repo.delete_by_id(User, Users.id, customer[0].user.id)
+        self.repo.delete_by_id(Users, Users.id, customer[0].user.id)
         return True
 
     def add_customer(self, user, customer):

@@ -7,6 +7,7 @@ from ApplicationLogger import print_to_log
 from Database.Customers import Customers
 from Database.Users import Users
 from Login_Token import LoginToken
+from Exceptions.UserRoleSettingException import UserRoleSettingException
 
 logger = logging.getLogger(__name__)
 
@@ -44,7 +45,7 @@ class AnonymousFacade(FacadeBase):
         except KeyError:
             print_to_log(logger, logging.ERROR,
                          f'User Roles table contains more than 3 user roles. Please check it ASAP.')
-            raise UserRoleTableError
+            raise UserRoleSettingException
 
     def add_customer(self, user, customer):
         if not isinstance(user, Users):
