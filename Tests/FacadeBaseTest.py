@@ -1,17 +1,19 @@
 import pytest
-from AnonymousFacade import AnonymousFacade
-from Flight import Flight
-from Country import Country
-from Airline_Company import Airline_Company
+
+import db_repo_pool
+from Business_Logics.AnonymousFacade import AnonymousFacade
+from Database.Flights import *
+from Database.Countries import *
+from Database.Airline_Companies import *
 from datetime import datetime
-from User import User
-from DbRepoPool import DbRepoPool
+from Database.Users import Users
+from db_repo_pool import db_repo_pool
 
 
 @pytest.fixture(scope='session')
 def dao_connection_singleton():
     print('Setting up same DAO for all tests.')
-    repool = DbRepoPool.get_instance()
+    repool = db_repo_pool.get_instance()
     repo = repool.get_connection()
     return AnonymousFacade(repo)
 

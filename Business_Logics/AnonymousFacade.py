@@ -6,7 +6,7 @@ import logging
 from ApplicationLogger import print_to_log
 from Database.Customers import Customers
 from Database.Users import Users
-from LoginToken import LoginToken
+from Login_Token import LoginToken
 
 logger = logging.getLogger(__name__)
 

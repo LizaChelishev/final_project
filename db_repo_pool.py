@@ -4,7 +4,7 @@ import threading
 import time
 
 
-class DbRepoPool:
+class db_repo_pool:
     _instance = None
     _lock = threading.Lock()
     _lock_pool = threading.Lock()

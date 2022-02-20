@@ -1,5 +1,4 @@
 from Business_Logics.FacadeBase import *
-from sqlalchemy.testing.pickleable import User
 from Business_Logics.FacadeBase import FacadeBase
 from Database import Airline_Companies
 from Database.Administrators import Administrators
