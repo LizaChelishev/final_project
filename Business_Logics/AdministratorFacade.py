@@ -86,7 +86,7 @@ class AdministratorFacade(FacadeBase):
             return
         print_to_log(logger, logging.DEBUG,
                      f'The login token "{self.login_token}" used the function remove_administrator and removed the administrator "{admin}"')
-        self.repo.delete_by_id(User, Users.id, admin[0].user.id)
+        self.repo.delete_by_id(Users, Users.id, admin[0].user.id)
         return True
 
     def remove_airline(self, airline_id):
