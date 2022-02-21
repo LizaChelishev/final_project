@@ -1,5 +1,4 @@
 import pytest
-
 from Database.Administrators import Administrators
 from Database.Airline_Companies import Airline_Companies
 from Database.Customers import Customers

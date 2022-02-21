@@ -1,5 +1,4 @@
 import pytest
-
 from Business_Logics.AnonymousFacade import AnonymousFacade
 from Database.Customers import Customers
 from Database.Tickets import Tickets

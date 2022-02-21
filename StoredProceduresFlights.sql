@@ -29,7 +29,9 @@ language plpgsql AS
 			where u.username = _username;
 		end;
 	$$;
+
 |||
+
 CREATE or replace function sp_get_user_by_username
 (_username text)
 returns TABLE(id bigint, username text, password text,

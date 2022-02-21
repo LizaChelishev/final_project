@@ -20,8 +20,8 @@ class AirlineFacade(FacadeBase):
 
         if self.login_token.role != 'airline_companies':
             print_to_log(logger, logging.ERROR,
-                         f'The login token "{self.login_token}" tried to use the function get_airline_flights but his role is '
-                         f'not Airline Company.')
+                         f'The login token "{self.login_token}" tried to use the function get_airline_flights but his '
+                         f'role is not Airline Company.')
 
     def update_airline(self, airline):
         print_to_log(logger, logging.INFO, f'Updating airline {airline.id}...')
@@ -47,17 +47,18 @@ class AirlineFacade(FacadeBase):
                 and self.repo.get_by_condition(Airline_Companies, lambda query: query.filter(
             Airline_Companies.name == airline.name).all()) != airline_:
             print_to_log(logger, logging.ERROR,
-                         f'The login token "{self.login_token}" tried to use the function update_airline but the airline.name "{airline.name}" '
-                         f'already exists in the db.')
+                         f'The login token "{self.login_token}" tried to use the function update_airline but the'
+                         f' airline.name "{airline.name}" already exists in the db.')
             return
         if not self.repo.get_by_condition(Countries,
                                           lambda query: query.filter(Countries.id == airline.country_id).all()):
             print_to_log(logger, logging.ERROR,
-                         f'The login token "{self.login_token}" tried to use the function update_airline but the airline.country_id "{airline.country_id}" '
-                         f'not exists in the db.')
+                         f'The login token "{self.login_token}" tried to use the function update_airline but the'
+                         f' airline.country_id "{airline.country_id}" not exists in the db.')
             return
         print_to_log(logger, logging.DEBUG,
-                     f'The login token "{self.login_token}" used the function update_airline and updated to airline "{airline}"')
+                     f'The login token "{self.login_token}" used the function update_airline and updated to'
+                     f' airline "{airline}"')
         self.repo.update_by_id(Airline_Companies, Airline_Companies.id, self.login_token.id,
                                {Airline_Companies.name: airline.name,
                                 Airline_Companies.country_id: airline.country_id})
@@ -66,29 +67,31 @@ class AirlineFacade(FacadeBase):
     def add_flight(self, flight):
         if self.login_token.role != 'airline_companies':
             print_to_log(logger, logging.ERROR,
-                         f'The login token "{self.login_token}" tried to use the function add_flight but his role is not Airline Company.')
+                         f'The login token "{self.login_token}" tried to use the function add_flight but his role'
+                         f' is not Airline Company.')
             return
         if not isinstance(flight, Flights):
             print_to_log(logger, logging.ERROR,
-                         f'The login token "{self.login_token}" tried to use the function add_flight but the flight "{flight}" '
-                         f'that was sent is not a Flight object.')
+                         f'The login token "{self.login_token}" tried to use the function add_flight but the flight '
+                         f'"{flight}" that was sent is not a Flight object.')
             return
         if not self.repo.get_by_condition(Countries,
                                           lambda query: query.filter(Countries.id == flight.origin_country_id).all()):
             print_to_log(logger, logging.ERROR,
-                         f'The login token "{self.login_token}" tried to use the function add_flight but the origin_country_id "{Flights.origin_country_id}"'
-                         f'that was sent not exists in the db.')
+                         f'The login token "{self.login_token}" tried to use the function add_flight but the'
+                         f' origin_country_id "{Flights.origin_country_id}" that was sent not exists in the db.')
             return
         if not self.repo.get_by_condition(Countries, lambda query: query.filter(
                 Countries.id == flight.destination_country_id).all()):
             print_to_log(logger, logging.ERROR,
-                         f'The login token "{self.login_token}" tried to use the function add_flight but the destination_country_id "{flight.destination_country_id}"'
-                         f'that was sent not exists in the db.')
+                         f'The login token "{self.login_token}" tried to use the function add_flight but the'
+                         f' destination_country_id "{flight.destination_country_id}"that was sent not exists in the db.')
             return
         if not isinstance(flight.departure_time, datetime) or not isinstance(flight.landing_time, datetime):
             print_to_log(logger, logging.ERROR,
-                         f'The login token "{self.login_token}" tried to use the function add_flight but both departure_time "{Flights.departure_time}" '
-                         f'and landing_time "{Flights.landing_time}" must be a Datetime objects.')
+                         f'The login token "{self.login_token}" tried to use the function add_flight but both '
+                         f'departure_time "{Flights.departure_time}" and landing_time "{Flights.landing_time}" '
+                         f'must be a Datetime objects.')
             return
         if flight.departure_time + datetime.timedelta(hours=1) > flight.landing_time:  # checking the delta t
             print_to_log(logger, logging.ERROR,
@@ -98,18 +101,19 @@ class AirlineFacade(FacadeBase):
             raise FlightTimesException
         if not isinstance(flight.remaining_tickets, int):
             print_to_log(logger, logging.ERROR,
-                         f'The login token "{self.login_token}" tried to use the function add_flight but the remaining_tickets'
-                         f' "{flight.remaining_tickets}" that was sent is not an integer.')
+                         f'The login token "{self.login_token}" tried to use the function add_flight'
+                         f' but the remaining_tickets "{flight.remaining_tickets}" that was sent is not an integer.')
             return
         if flight.remaining_tickets < 100:
             print_to_log(logger, logging.ERROR,
-                         f'The login token "{self.login_token}" tried to use the function add_flight but the remaining_tickets'
-                         f' "{flight.remaining_tickets}" that was sent must be more or equal than 100.')
+                         f'The login token "{self.login_token}" tried to use the function add_flight but the'
+                         f' remaining_tickets "{flight.remaining_tickets}" that was sent must be more or equal than 100.')
             return
         flight.id = None
         flight.airline_company_id = self.login_token.id
         print_to_log(logger, logging.DEBUG,
-                     f'The login token "{self.login_token}" used the function add_flight and added the flight "{flight}" to the db.')
+                     f'The login token "{self.login_token}" used the function add_flight and added the'
+                     f' flight "{flight}" to the db.')
         self.repo.add(flight)
         return True
 

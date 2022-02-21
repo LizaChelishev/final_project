@@ -1,7 +1,6 @@
 import datetime
 import logging
 from venv import logger
-
 from sqlalchemy import asc, extract, desc, text
 from ApplicationLogger import print_to_log
 from Database.Administrators import Administrators

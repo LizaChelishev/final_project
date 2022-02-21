@@ -37,14 +37,14 @@ class AnonymousFacade(FacadeBase):
                         f'{AnonymousFacade.user_backref_and_name_column_dic[user.user_role][1]}')
             id_ = eval(f'user.{AnonymousFacade.user_backref_and_name_column_dic[user.user_role][0]}.id')
             role = AnonymousFacade.user_backref_and_name_column_dic[user.user_role][0]
-            login_token = LoginToken(id_, name, role)
+            login_token = LoginToken
 
             print_to_log(logger, logging.DEBUG, f'{login_token} logged in to the system.')
             return AnonymousFacade.facade_dic[user.user_role](login_token, self.repo)
 
         except KeyError:
             print_to_log(logger, logging.ERROR,
-                         f'User Roles table contains more than 3 user roles. Please check it ASAP.')
+                         f'User Roles table contains more than 3 user roles.')
             raise UserRoleSettingException
 
     def add_customer(self, user, customer):
@@ -57,18 +57,21 @@ class AnonymousFacade(FacadeBase):
             return
         if not isinstance(customer, Customers):
             print_to_log(logger, logging.ERROR,
-                         f'the customer "{customer}" that was sent to the function add_customer is not a Customer instance.')
+                         f'the customer "{customer}" that was sent to the function add_customer is not a '
+                         f'Customer instance.')
             return
         if self.repo.get_by_condition(Customers,
                                       lambda query: query.filter(Customers.phone_no == customer.phone_no).all()):
             print_to_log(logger, logging.ERROR,
-                         f'the customer.phone_no "{customer.phone_no}" that was sent the function add_customer is already exists in the db.')
+                         f'the customer.phone_no "{customer.phone_no}" that was sent the function add_customer is'
+                         f' already exists in the db.')
             return
         if self.repo.get_by_condition(Customers,
                                       lambda query: query.filter(
                                           Customers.credit_card_no == customer.credit_card_no).all()):
             print_to_log(logger, logging.ERROR,
-                         f'the customer.credit_card_no "{customer.credit_card_no}" that was sent the function add_customer is already exists in the db.')
+                         f'the customer.credit_card_no "{customer.credit_card_no}" that was sent the function'
+                         f' add_customer is already exists in the db.')
             return
         if self.create_user(user):
             customer.id = None

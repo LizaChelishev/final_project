@@ -123,7 +123,8 @@ class CustomerFacade(FacadeBase):
         print_to_log(logger, logging.INFO, f'Getting all customer\'s {customer.id} tickets...')
         if self.login_token.role != 'customers':
             print_to_log(logger, logging.ERROR,
-                         f'The login token "{self.login_token}" tried to use the function get_tickets_by_customer but his role is not Customer.')
+                         f'The login token "{self.login_token}" tried to use the function get_tickets_by_customer'
+                         f' but his role is not Customer.')
             return
         return self.repo.get_by_condition(Tickets,
                                           lambda query: query.filter(Tickets.customer_id == self.login_token.id).all())
