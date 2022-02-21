@@ -23,12 +23,12 @@ def reset_db(customer_facade_object):
 
 
 @pytest.mark.parametrize('customer, expected', [('not customer', None),
-                                                (Customers(first_name='Elad', last_name='Gunders', address='Sokolov 11',
-                          phone_no='0545557007', credit_card_no='0022', user_id=2), None),
-                                                (Customers(first_name='Elad', last_name='Gunders', address='Sokolov 11',
-                          phone_no='0545557000', credit_card_no='0000', user_id=2), None),
-                                                (Customers(first_name='Ela', last_name='Gun', address='Sokolov 1',
-                          phone_no='0545557000', credit_card_no='9999', user_id=2), True)])
+                                                (Customers(first_name='Liza', last_name='Dorven', address='New York',
+                                                           phone_no='0544462111', credit_card_no='8520', user_id=2), None),
+                                                (Customers(first_name='Ofek', last_name='Shimoni', address='Haroline 82',
+                                                           phone_no='0544462112', credit_card_no='7411', user_id=2), None),
+                                                (Customers(first_name='Pira', last_name='Ziva', address='Hess 70',
+                                                           phone_no='0544462113', credit_card_no='9630', user_id=2), True)])
 def test_customer_facade_update_customer(customer_facade_object, customer, expected):
     actual = customer_facade_object.update_customer(customer)
     assert actual == expected
@@ -45,7 +45,6 @@ def test_customer_facade_remove_ticket(customer_facade_object, ticket, expected)
 def test_customer_facade_get_tickets_by_customer(customer_facade_object):
     actual = customer_facade_object.get_tickets_by_customer()
     assert actual == [Tickets(id=2, flight_id=2, customer_id=2)]
-
 
 
 def test_customer_facade_add_ticket_raise_noremainingticketserror(customer_facade_object):
