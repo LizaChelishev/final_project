@@ -29,7 +29,7 @@ class db_repo_pool:
 
     @staticmethod
     def get_max_possible_connections():
-        return DbRepoPool._max_connections
+        return db_repo_pool._max_connections
 
     def get_connection(self):
         while True:
