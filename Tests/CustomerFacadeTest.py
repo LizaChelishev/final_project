@@ -3,7 +3,7 @@ from Business_Logics.AnonymousFacade import AnonymousFacade
 from Database.Customers import Customers
 from Database.Tickets import Tickets
 from Exceptions.NoMoreTicketsForFlightsException import NoMoreTicketsForFlightsException
-from db_repo_pool import db_repo_pool
+from DataAccess.db_repo_pool import db_repo_pool
 
 
 @pytest.fixture(scope='session')

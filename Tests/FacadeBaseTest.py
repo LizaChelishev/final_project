@@ -1,13 +1,9 @@
 import pytest
 
-import db_repo_pool
+from DataAccess import db_repo_pool
 from Business_Logics.AnonymousFacade import AnonymousFacade
-from Database.Flights import *
-from Database.Countries import *
-from Database.Airline_Companies import *
 from datetime import datetime
-from Database.Users import Users
-from db_repo_pool import db_repo_pool
+from DataAccess.db_repo_pool import db_repo_pool
 
 
 @pytest.fixture(scope='session')

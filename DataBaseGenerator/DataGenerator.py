@@ -1,21 +1,21 @@
-from tables.Customer import Customer
-from tables.Country import Country
-from tables.User import User
-from tables.User_Role import User_Role
-from tables.Flight import Flight
-from tables.Ticket import Ticket
-from tables.Administrator import Administrator
-from tables.Airline_Company import Airline_Company
+from Database.Customers import Customers
+from Database.Countries import Countries
+from Database.Users import Users
+from Database.User_Roles import User_Roles
+from Database.Flights import Flights
+from Database.Tickets import Tickets
+from Database.Administrators import Administrators
+from Database.Airline_Companies import Airline_Companies
 from datetime import timedelta
 import random
 import httpx
 import json
 import trio
 from faker import Faker
-from BaseDbDataGen import BaseDbDataGen
+from BaseDataGenerator import BaseDataGenerator
 
 
-class DbDataGen(BaseDbDataGen):
+class DataGen(BaseDataGenerator):
 
     customer_role = 1
     airline_role = 2
@@ -65,32 +65,32 @@ class DbDataGen(BaseDbDataGen):
         with open(r"countries.json") as f:
             countries = json.load(f)
         for country in countries:
-            countries_ls.append(Country(name=country['name']))
+            countries_ls.append(Countries(name=country['name']))
         self.repo.add_all(countries_ls)
         self.number_of_countries_in_db = len(countries_ls)
 
     def generate_user_roles(self):
-        self.repo.add(User_Role(role_name='Customer'))
-        self.repo.add(User_Role(role_name='Airline Company'))
-        self.repo.add(User_Role(role_name='Administrator'))
+        self.repo.add(User_Roles(role_name='Customer'))
+        self.repo.add(User_Roles(role_name='Airline Company'))
+        self.repo.add(User_Roles(role_name='Administrator'))
 
     def create_user(self, j_son, user_role):
         username, pw, email = self.get_user_data(j_son)
-        inserted_user = User(username=username, password=pw, email=email, user_role=user_role)
+        inserted_user = Users(username=username, password=pw, email=email, user_role=user_role)
         self.repo.add(inserted_user)
         return inserted_user
 
     def generate_admin(self):
         data = trio.run(self.get_data)
         user = self.create_user(data, self.admin_role)
-        self.repo.add(Administrator(first_name='Admin', last_name='istrator', user_id=user.id))
+        self.repo.add(Administrators(first_name='Admin', last_name='istrator', user_id=user.id))
 
     def generate_customers(self, num):
         for i in range(num):
             data = trio.run(self.get_data)
             user = self.create_user(data, self.customer_role)
             first_name, last_name, address, phone_no = self.get_customer_data(data)
-            new_customer = Customer(first_name=first_name,
+            new_customer = Customers(first_name=first_name,
                                     last_name=last_name,
                                     address=address, phone_no=phone_no,
                                     credit_card_no=self.generate_credit_card_num(), user_id=user.id)
@@ -104,13 +104,13 @@ class DbDataGen(BaseDbDataGen):
         for i in range(num):
             data = trio.run(self.get_data)
             user = self.create_user(data, self.airline_role)
-            new_airline = Airline_Company(name=airlines[i]["name"],
+            new_airline = Airline_Companies(name=airlines[i]["name"],
                                           country_id=random.randint(1, self.number_of_countries_in_db),
                                           user_id=user.id)
             self.repo.add(new_airline)
 
     def generate_flights_per_company(self, num):
-        airlines = self.repo.get_all(Airline_Company)
+        airlines = self.repo.get_all(Airline_Companies)
         for a in airlines:
             for i in range(num):
                 airline_company_id = a.id
@@ -119,15 +119,15 @@ class DbDataGen(BaseDbDataGen):
                 departure_time = self.fake.date_time_between(start_date='now', end_date='+2y')
                 landing_time = departure_time + timedelta(hours=random.randint(2, self.max_hours_delta_t))  # min delta t is 2 hours
                 remaining_tickets = self.remaining_tickets_per_flight
-                self.repo.add(Flight(airline_company_id=airline_company_id, origin_country_id=origin_country_id,
+                self.repo.add(Flights(airline_company_id=airline_company_id, origin_country_id=origin_country_id,
                                      destination_country_id=destination_country_id, departure_time=departure_time,
                                      landing_time=landing_time, remaining_tickets=remaining_tickets))
 
     def generate_tickets_per_customer(self, num):
-        customers = self.repo.get_all(Customer)
-        flights = self.repo.get_all(Flight)
+        customers = self.repo.get_all(Customers)
+        flights = self.repo.get_all(Flights)
         for c in customers:
             shuffled_flights = random.sample(flights, len(flights))
             flights_for_tickets = shuffled_flights[0:num]
             for f in flights_for_tickets:
-                self.repo.add(Ticket(flight_id=f.id, customer_id=c.id))
+                self.repo.add(Tickets(flight_id=f.id, customer_id=c.id))
