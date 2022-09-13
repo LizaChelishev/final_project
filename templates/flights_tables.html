@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- refreshing page every 5 min -->
+    <meta http-equiv="refresh" content="300">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pilotify - Driving through clouds - Home page</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='index.js') }}"></script>
+
+</head>
+<body>
+
+
+    <div class="container">
+        <div class="row">
+        <div class="col-sm">
+            <h1 class="fw-lighter">Departures</h1>
+            <h4 class="fw-lighter" style="display:inline">in the next </h4>
+            <input class="fw-lighter" type="number" id="departure_delta" name="departure_delta" min="1" max="12" value="4">
+            <h4 class="fw-lighter" style="display:inline">hours</h4><br><br>
+            <button type="button" class="btn btn-secondary" id="departure_button">View flighs</button>
+            <hr>
+            <table class="table table-striped table-dark"  style="width: 600px;" id="departures">
+                <tr class="table-info">
+                    <th class="fw-lighter">Airline Company</th>
+                    <th class="fw-lighter">Departing from</th>
+                    <th class="fw-lighter">to</th>
+                    <th class="fw-lighter">Est. departing time</th>
+                    <th class="fw-lighter">Status</th>
+                 </tr>
+             </table>
+        </div>
+        <div class="col-sm">
+            <h1 class="fw-lighter">Arrivals</h1>
+            <h4 class="fw-lighter" style="display:inline">in the next </h4>
+            <input class="fw-lighter" type="number" id="arrival_delta" name="arrival_delta" min="1" max="12" value="4">
+            <h4 class="fw-lighter" style="display:inline">hours</h4><br><br>
+            <button type="button" class="btn btn-secondary" id="arrival_button">View flighs</button>
+            <hr>
+            <table class="table table-striped table-dark"  style="width: 600px;" id="arrivals">
+                <tr class="table-info">
+                    <th class="fw-lighter">Airline Company</th>
+                    <th class="fw-lighter">Departing from</th>
+                    <th class="fw-lighter">to</th>
+                    <th class="fw-lighter">Est. departing time</th>
+                    <th class="fw-lighter">Status</th>
+                 </tr>
+             </table>
+        </div>
+        </div>
+    </div>
+ <br><br>
+
+</body>
+</html>
