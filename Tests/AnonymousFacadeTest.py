@@ -4,7 +4,7 @@ from Business_Logics.AirlineFacade import AirlineFacade
 from Business_Logics.AnonymousFacade import AnonymousFacade
 from Business_Logics.CustomerFacade import CustomerFacade
 from Exceptions.UserRoleSettingException import UserRoleSettingException
-from db_repo_pool import db_repo_pool
+from DataAccess.db_repo_pool import db_repo_pool
 
 
 @pytest.fixture(scope='session')

@@ -5,7 +5,7 @@ from datetime import datetime
 from Database.Airline_Companies import *
 from Exceptions.FlightTimesException import *
 from Exceptions.NoMoreTicketsForFlightsException import *
-from db_repo_pool import db_repo_pool
+from DataAccess.db_repo_pool import db_repo_pool
 
 
 @pytest.fixture(scope='session')
