@@ -1,17 +1,22 @@
 import datetime
 import logging
+from configparser import ConfigParser
+import threading
 
 
+class Logger:
 
-def init_logger():
-    for handler in logging.root.handlers:
-        logging.root.removeHandler(handler)
+    _instance = None
+    _lock = threading.Lock()
 
-    logging.basicConfig(level='DEBUG')
-    file_handler = logging.FileHandler("logfile.log")
-    file_handler.setLevel(logging.DEBUG)
-    logger = logging.getLogger()
-    logger.addHandler(file_handler)
+    config = ConfigParser()
+    config.read("config.conf")
+    LOG_LEVEL = config["logging"]["level"]
+    LOG_FILE_NAME_PREFIX = config["logging"]["logfile_name_prefix"]
+    LOG_FILE_NAME_EXT = config["logging"]["logfile_name_ext"]
+
+    def __init__(self):
+        raise RuntimeError('Call instance() instead')
 
     @classmethod
     def get_instance(cls):

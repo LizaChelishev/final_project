@@ -1,7 +1,7 @@
 class LoginToken:
 
-    def __init__(self, id, name, role):
-        self._id = id
+    def __init__(self, id_, name, role):
+        self._id = id_
         self._name = name
         self._role = role
 
