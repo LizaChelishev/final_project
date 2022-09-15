@@ -1,24 +1,20 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import declarative_base, sessionmaker
-from configparser import ConfigParser
-from ApplicationLogger import Logger
 from sqlalchemy.exc import OperationalError
-
-
-config = ConfigParser()
-config.read("config.conf")
-connection_string = config["db"]["conn_string"]
+from ApplicationLogger import Logger
+from sqlalchemy import create_engine
+import configparser
+from sqlalchemy.orm import declarative_base, sessionmaker
 
 logger = Logger.get_instance()
-# if you want to create a table from base the class needs to inherit from declarative_base
 Base = declarative_base()
 
-Session = sessionmaker()
-engine = create_engine(connection_string, echo=True)  # echo makes the console print all the sql statements being run
-local_session = Session(bind=engine)
+config = configparser.ConfigParser()
+config.read("config.conf")
+
+connection_string = 'postgresql+psycopg2://postgres:LooLi1709@localhost/Flights_Project'
+#engine = create_engine(connection_string, echo=True)
+engine = create_engine('postgresql+psycopg2://postgres:LooLi1709@localhost/Flights_Project')
 
 
-# creates a table to all classes that inherits from Base
 def create_all_entities():
     try:
         Base.metadata.create_all(engine)
@@ -26,3 +22,7 @@ def create_all_entities():
     except OperationalError:
         print('The database does not exist, please check the connection string')
         logger.logger.critical('The database does not exist, please check the connection string')
+
+
+Session = sessionmaker()
+local_session = Session(bind=engine)
