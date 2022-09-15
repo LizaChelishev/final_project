@@ -12,8 +12,8 @@ from werkzeug.security import check_password_hash
 
 
 class AnonymousFacade(FacadeBase):
-    facade_dic = {1: lambda login_token, repo: CustomerFacade(login_token, repo),
-                  2: lambda login_token, repo: AirlineFacade(login_token, repo),
+
+    facade_dic = {1: lambda login_token, repo: CustomerFacade(login_token, repo), 2: lambda login_token, repo: AirlineFacade(login_token, repo),
                   3: lambda login_token, repo: AdministratorFacade(login_token, repo)}
 
     user_backref_and_name_column_dic = {1: ['customers', 'first_name'], 2: ['airline_companies', 'name'],
@@ -39,7 +39,7 @@ class AnonymousFacade(FacadeBase):
                         f'{AnonymousFacade.user_backref_and_name_column_dic[user.user_role][1]}')
             id_ = eval(f'user.{AnonymousFacade.user_backref_and_name_column_dic[user.user_role][0]}.id')
             role = AnonymousFacade.user_backref_and_name_column_dic[user.user_role][0]
-            login_token = LoginToken
+            login_token = LoginToken(id_, name, role)
 
             self.logger.logger.debug(f'{login_token} logged in to the system.')
             return AnonymousFacade.facade_dic[user.user_role](login_token, self.repo)
@@ -51,8 +51,7 @@ class AnonymousFacade(FacadeBase):
 
     def add_customer(self, user, customer):
         if not isinstance(user, Users):
-            self.logger.logger.error(
-                f'the user "{user}" that was sent to the function add_customer is not a User instance.')
+            self.logger.logger.error(f'the user "{user}" that was sent to the function add_customer is not a User instance.')
             raise NotValidDataError
         if user.user_role != 1:
             self.logger.logger.error(f'the user.user_role "{user.user_role}" is not 1(Customer).')
@@ -75,14 +74,9 @@ class AnonymousFacade(FacadeBase):
         if self.create_user(user):
             customer.id = None
             customer.user_id = user.id
-            self.logger.logger.debug(
-                f'A Customer "{customer}" connected by the User "{user}" has been added to the db.')
+            self.logger.logger.debug(f'A Customer "{customer}" connected by the User "{user}" has been added to the db.')
             self.repo.add(customer)
             return True
         else:
-            self.logger.logger.error(
-                f'The function add_customer failed - the User "{user} "that was sent is not valid.')
+            self.logger.logger.error(f'The function add_customer failed - the User "{user} "that was sent is not valid.')
             raise NotValidDataError
-
-    def get_arrival_flights_by_delta_t(self, param):
-        pass

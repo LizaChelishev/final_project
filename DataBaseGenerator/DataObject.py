@@ -1,6 +1,6 @@
 from custom_errors.DbGenDataNotValidError import DbGenDataNotValidError
-from DbDataGen import DbDataGen
-from RabbitProducerObject import RabbitProducerObject
+from DataBaseGenerator.DataGenerator import DbDataGen
+from RabbitProducer import RabbitProducerObject
 import json
 
 

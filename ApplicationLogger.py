@@ -5,7 +5,6 @@ import threading
 
 
 class Logger:
-
     _instance = None
     _lock = threading.Lock()
 
@@ -16,6 +15,16 @@ class Logger:
     LOG_FILE_NAME_EXT = config["logging"]["logfile_name_ext"]
 
     def __init__(self):
+        self.file_handler = None
+        self.logger = logging.getLogger(__name__)
+        self.logger.setLevel(logging.getLevelName(Logger.LOG_LEVEL))
+        formatter = logging.Formatter('%(asctime)s - %(name)s%(levelname)s: %(message)s', datefmt='%m/%d/%Y %I:%M:%S%p')
+        file_handler = logging.FileHandler('logFile.log')
+        file_handler.setFormatter(formatter)
+        stream_handler = logging.StreamHandler() #if we want to print to consol
+        stream_handler.setFormatter(formatter)
+        self.logger.addHandler(file_handler)
+        self.logger.addHandler(stream_handler)
         raise RuntimeError('Call instance() instead')
 
     @classmethod
